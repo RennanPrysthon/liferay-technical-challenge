@@ -22,7 +22,7 @@ const ShowDate: React.FC<Props> = ({ type, url }) => {
     
     })()
     
-  }, [])
+  }, [url])
 
   return (
     <Container>
@@ -32,4 +32,4 @@ const ShowDate: React.FC<Props> = ({ type, url }) => {
   
 }
 
-export default memo(ShowDate);
+export default ShowDate;

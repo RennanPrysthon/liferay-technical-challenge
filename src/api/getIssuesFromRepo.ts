@@ -28,7 +28,7 @@ Promise<IssueResult[]>
     var list = data.filter((value) => value.created_at.split('T')[0] === label)
 
     result.push({
-      date: label,
+      date: moment(label).format('MM ddd'),
       closed: list.filter(val => val.state === 'closed').length,
       opened: list.filter(val => val.state === 'open').length
     })
