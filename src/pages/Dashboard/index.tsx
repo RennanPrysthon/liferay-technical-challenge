@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useToasts } from 'react-toast-notifications'
 
 import api from '../../api';
 
 import { Container, ChartContainers, Header, Title, Subtitle} from './styles';
 
 const Dashboard: React.FC = () => {
+  const { addToast } = useToasts();
+  
   const [loading, setLoading] = useState(false);
   
   const [organizationName,setOrganizationName] = useState('Rocketseat');
@@ -24,11 +27,17 @@ const Dashboard: React.FC = () => {
       setLoading(false)
 
       if (error.response.status = 404) {
-        alert(`Organização ${organizationName} não encontrada`)
+        addToast(`Organização ${organizationName} não encontrada`, {
+          appearance: 'error',
+          autoDismiss: true,
+        })
         return;
       }
       
-      alert ('Ocorreu um err ao consultar a organização, tente novamente mais tarde')
+      addToast('Ocorreu um err ao consultar a organização, tente novamente mais tarde', {
+        appearance: 'error',
+        autoDismiss: true,
+      })
     }
   }
 
@@ -40,7 +49,10 @@ const Dashboard: React.FC = () => {
     let repo = repositories.find(repo => repo.name === repoName)
 
     if (repo === undefined || repo === null) {
-      alert(`Repositorio ${repoName} desta organização não foi encontrado`);
+      addToast(`Repositorio ${repoName} desta organização não foi encontrado`, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
       return;
     }
 
