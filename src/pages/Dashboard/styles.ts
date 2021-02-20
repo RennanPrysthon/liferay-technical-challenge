@@ -28,22 +28,27 @@ export const GridContent = styled.div`
   width: 100%;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
-  grid-gap: 5px;
+  grid-gap: 20px;
 `
 
 export const GridLarge = styled.div`
   background-color: var(--white);
   border-radius: 10px;
+  box-shadow: 2px 3px 4px 1px rgba(230,230,230,0.72);
+-webkit-box-shadow: 2px 3px 4px 1px rgba(230,230,230,0.72);
+-moz-box-shadow: 2px 3px 4px 1px rgba(230,230,230,0.72);
 `
 
 export const GridSmall = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 5px;
-
+  grid-gap: 20px;
 `
 
 export const GridItem = styled.div`
   background-color: var(--white);
   border-radius: 5px;
+  box-shadow: 2px 3px 4px 1px rgba(230,230,230,0.72);
+-webkit-box-shadow: 2px 3px 4px 1px rgba(230,230,230,0.72);
+-moz-box-shadow: 2px 3px 4px 1px rgba(230,230,230,0.72);
 `
