@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useToasts } from 'react-toast-notifications'
 
 import api from '../../api';
@@ -8,7 +8,16 @@ import ChartBar from '../../components/ChartBar';
 import ShowDate from '../../components/ShowDate';
 import ChartLinear from '../../components/ChartLinear';
 
-import { Container, ChartContainers, Header, Title, Subtitle} from './styles';
+import { 
+  Container, 
+  Header, 
+  Title, 
+  Subtitle,
+  GridContent,
+  GridLarge,
+  GridSmall,
+  GridItem
+} from './styles';
 
 const Dashboard: React.FC = () => {
   const { addToast } = useToasts();
@@ -64,6 +73,10 @@ const Dashboard: React.FC = () => {
     setRepository(repo);
   }
 
+  useEffect(() => {
+    getOrganizationRepos();
+  }, [])
+
   return (
     <Container>
       <Header>
@@ -74,39 +87,38 @@ const Dashboard: React.FC = () => {
       {
         !loading && !!repository &&
         <div>
-          <ChartContainers type="big">
-            <ChartContainer
-              title="Average Merge Time by Pull Request Size"
-              type="big"
-            >
-              <ChartBar />
-            </ChartContainer>
-          </ChartContainers>
-
-          <ChartContainers type="small">
-            <ChartContainer
-              title="Average Pull Request Merge Time"
-              type="small"
-            >
-              <ShowDate type="pull" url={repository.url}/>
-            </ChartContainer>
-
-            <ChartContainer
-              title="Average Issue Close Time"
-              type="small"
-            >
-              <ShowDate type="issue" url={repository.url}/>
-            </ChartContainer>          
-          </ChartContainers>
-
-          <ChartContainers type="big">
-            <ChartContainer
-              title="Average Merge Time by Pull Request Size"
-              type="big"
-            >
-              <ChartLinear repoUrl={repository.url} />
-            </ChartContainer>
-          </ChartContainers>
+          <GridContent>
+            <GridLarge>
+              <ChartContainer
+                title="Average Merge Time by Pull Request Size"
+              >
+                <ChartBar url={repository.url}/>
+              </ChartContainer>
+            </GridLarge>
+            <GridSmall>
+              <GridItem>
+                <ChartContainer
+                  title="Average Pull Request Merge Time"
+                >
+                  <ShowDate type="pull" url={repository.url}/>
+                </ChartContainer>
+              </GridItem>
+              <GridItem>
+                <ChartContainer
+                  title="Average Issue Close Time"
+                >
+                  <ShowDate type="issue" url={repository.url}/>                  
+                </ChartContainer>          
+              </GridItem>
+            </GridSmall>
+            <GridLarge>
+              <ChartContainer
+                title="Month Summary"
+              >      
+                <ChartLinear repoUrl={repository.url} />
+              </ChartContainer>          
+            </GridLarge>
+          </GridContent>
         </div>
       } 
     </Container>

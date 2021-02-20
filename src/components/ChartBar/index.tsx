@@ -2,8 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js';
 
 import { Container, Canvas} from './styles';
+interface Props {
+  url: string;
+}
 
-const ChartBar: React.FC = () => {
+const ChartBar: React.FC<Props> = ({ url }) => {
   const chartContentRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -38,7 +41,7 @@ const ChartBar: React.FC = () => {
           }
       }
     })
-  })
+  }, [url])
 
   return (
     <Container>

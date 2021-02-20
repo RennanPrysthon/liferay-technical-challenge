@@ -3,16 +3,12 @@ import React from 'react';
 import { Container, Header, Content } from './styles';
 
 interface Props {
-  type: 'small' | 'big';
   title: string;
-
 }
 
-const ChartContainer: React.FC<Props> = ({ type, title, children}) => {
+const ChartContainer: React.FC<Props> = ({ title, children}) => {
   return (
-    <Container
-      type={type}
-    >
+    <Container>
       <Header>
         {title}
       </Header>

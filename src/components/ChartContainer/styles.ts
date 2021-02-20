@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-export const Container = styled.div<{type: string}>`
-  width: ${props => props.type === 'big' ? '90%' : '40%' };
+export const Container = styled.div`
+  width: 100%;
   background-color: var(--white);
+  border-radius: 5px;
 `;
 
 export const Header = styled.div`
