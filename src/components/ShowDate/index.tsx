@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useEffect, memo, useState } from 'react';
+import getIssuesCloseAverageTime from '../../api/getIssuesCloseAverageTime';
+import getPullsCloseAverageTime from '../../api/getPullsCloseAverageTime';
 
 import { Container } from './styles';
 
-const ShowDate: React.FC = () => {
+interface Props {
+  type: 'issue' | 'pull';
+  url: string;
+}
+
+const ShowDate: React.FC<Props> = ({ type, url }) => {
+  const [loading, setLoading] = useState(true);
+  const [date, setDate] = useState('');
+  
+  useEffect(() => {
+    (async () => {
+      
+      var date = type === 'issue' ? await getIssuesCloseAverageTime(url) : await getPullsCloseAverageTime(url)
+      setLoading(false);
+      setDate(date)
+    
+    })()
+    
+  }, [])
+
   return (
     <Container>
-      1day 2h30m
+      {!loading && date}
     </Container>
   )
   
 }
 
-export default ShowDate;
+export default memo(ShowDate);

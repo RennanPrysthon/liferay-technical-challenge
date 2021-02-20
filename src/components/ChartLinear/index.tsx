@@ -2,38 +2,59 @@ import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js';
 
 import { Container, Canvas} from './styles';
+import getIssuesFromRepo from '../../api/getIssuesFromRepo';
 
-const ChartLinear: React.FC = () => {
+interface Props {
+  repoUrl: string
+}
+
+const ChartLinear: React.FC<Props> = ({ repoUrl }) => {
   const chartContentRef = useRef<HTMLCanvasElement>(null);
-
+  
   useEffect(() => {
-    new Chart(chartContentRef.current, {
-      type: 'line',
-      data: {
-        labels: ['Red', 'Blue', 'Des', 'Red', 'Blue', 'Des'],
-
-          datasets: [{
-            label: 'Opened',
-            borderColor: '#43c600',
-            data: [12, 19, 22, 33, 33, 44, 12],
-            borderWidth: 1,
-            fill: false
-          },{
-            label: 'Closed',
-            borderColor: '#f53902',
-            data: [12, 19, 22, 33, 33, 44, 12],
-            borderWidth: 1,
-            fill: false
-          }]
-      },
-      options: {
-        scales: {
-            yAxes: [{
-                stacked: true
-            }]
-        }
-    }
-    })
+    (async () => {
+      const result = await getIssuesFromRepo(repoUrl);
+      
+      new Chart(chartContentRef.current, {
+        type: 'line',
+        steppedLine: true,
+        data: {
+          labels: result.map(r => r.date),
+          datasets: [
+              {
+                label: 'Closed',
+                borderColor: '#f53902',
+                data: result.map(r => r.closed),
+                fill: false,
+              },
+              {
+                label: 'Opened',
+                borderColor: '#43c600',
+                data: result.map(r => r.opened),
+                fill: false,
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: 'Chart.js Line Chart - Logarithmic'
+              }
+            },
+            scales: {
+              x: {
+                display: true,
+              },
+              y: {
+                display: true,
+                type: 'logarithmic',
+              }
+            }
+          }
+      })
+    })()
   })
 
   return (

@@ -15,8 +15,8 @@ const Dashboard: React.FC = () => {
   
   const [loading, setLoading] = useState(false);
   
-  const [organizationName,setOrganizationName] = useState('Rocketseat');
-  const [repositoryName, setRepositoryName] = useState('teste');
+  const [organizationName,setOrganizationName] = useState('Liferay');
+  const [repositoryName, setRepositoryName] = useState('liferay-portal');
   
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [repository, setRepository] = useState<Repository>();
@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
     } catch (error) {
       setLoading(false)
 
-      if (error.response.status = 404) {
+      if (error?.response?.status === 404) {
         addToast(`Organização ${organizationName} não encontrada`, {
           appearance: 'error',
           autoDismiss: true,
@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
   }
 
   function loadRepository(repoName: string = repositoryName) {
-    if (repoName === '' || repoName === null || repoName === undefined) {
+    if (repoName === '' || repoName === null || repoName === undefined || repositories === undefined || repositories === null || repositories.length < 1 ) {
       return;
     }
     
@@ -72,7 +72,7 @@ const Dashboard: React.FC = () => {
       </Header>
 
       {
-        !loading && 
+        !loading && !!repository &&
         <div>
           <ChartContainers type="big">
             <ChartContainer
@@ -88,14 +88,14 @@ const Dashboard: React.FC = () => {
               title="Average Pull Request Merge Time"
               type="small"
             >
-              <ShowDate />
+              <ShowDate type="pull" url={repository.url}/>
             </ChartContainer>
 
             <ChartContainer
               title="Average Issue Close Time"
               type="small"
             >
-              <ShowDate />
+              <ShowDate type="issue" url={repository.url}/>
             </ChartContainer>          
           </ChartContainers>
 
@@ -104,7 +104,7 @@ const Dashboard: React.FC = () => {
               title="Average Merge Time by Pull Request Size"
               type="big"
             >
-              <ChartLinear />
+              <ChartLinear repoUrl={repository.url} />
             </ChartContainer>
           </ChartContainers>
         </div>
