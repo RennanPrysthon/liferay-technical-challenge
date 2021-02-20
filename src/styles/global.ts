@@ -1,8 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
-
   * {
     margin: 0;
     padding: 0;
@@ -12,7 +10,7 @@ export default createGlobalStyle`
   html, body, #root {
     height: 100%;
     background-color: var(--grey);
-    font-family: 'PT Sans', sans-serif;
+    font-family: 'Fira Sans', sans-serif;
   }
   *, button, input {
     border: 0;
