@@ -3,6 +3,11 @@ import { useToasts } from 'react-toast-notifications'
 
 import api from '../../api';
 
+import ChartContainer from '../../components/ChartContainer';
+import ChartBar from '../../components/ChartBar';
+import ShowDate from '../../components/ShowDate';
+import ChartLinear from '../../components/ChartLinear';
+
 import { Container, ChartContainers, Header, Title, Subtitle} from './styles';
 
 const Dashboard: React.FC = () => {
@@ -66,11 +71,44 @@ const Dashboard: React.FC = () => {
         <Subtitle value={repositoryName} onChange={(ev) => setRepositoryName(ev.target.value)} onBlur={(ev) => loadRepository(ev.target.value)}/>     
       </Header>
 
-      {!loading && 
-        <ChartContainers>
+      {
+        !loading && 
+        <div>
+          <ChartContainers type="big">
+            <ChartContainer
+              title="Average Merge Time by Pull Request Size"
+              type="big"
+            >
+              <ChartBar />
+            </ChartContainer>
+          </ChartContainers>
 
-        </ChartContainers>
-      }
+          <ChartContainers type="small">
+            <ChartContainer
+              title="Average Pull Request Merge Time"
+              type="small"
+            >
+              <ShowDate />
+            </ChartContainer>
+
+            <ChartContainer
+              title="Average Issue Close Time"
+              type="small"
+            >
+              <ShowDate />
+            </ChartContainer>          
+          </ChartContainers>
+
+          <ChartContainers type="big">
+            <ChartContainer
+              title="Average Merge Time by Pull Request Size"
+              type="big"
+            >
+              <ChartLinear />
+            </ChartContainer>
+          </ChartContainers>
+        </div>
+      } 
     </Container>
   )
 }

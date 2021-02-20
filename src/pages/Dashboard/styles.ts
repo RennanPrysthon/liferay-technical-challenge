@@ -4,9 +4,12 @@ export const Container = styled.div`
   box-sizing: border-box;
 `;
 
-export const ChartContainers = styled.div`
+export const ChartContainers = styled.div<{type: 'small' | 'big'}>`
   margin: 10px;
   display: flex;
+  flex-direction: ${p => p.type === 'big' ? 'column' : 'row'};
+  align-items: center;
+  justify-content: ${p => p.type === 'big' ? 'center' : 'space-around'}; ;
 `;
 
 export const Header = styled.div`
